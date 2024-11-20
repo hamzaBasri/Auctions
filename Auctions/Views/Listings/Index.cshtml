@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Auctions.Models.Listing>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Active Listings</h2>
+
+@foreach (var Listing in Model)
+{
+    <div class="card" style="width: 18rem;">
+        <img src="~/Images/@Listing.ImagePath" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Listing.Title</h5>
+            <p class="card-text">@Listing.Description</p>
+            <p class="card-text"><strong>Price: </strong>@Listing.Price.ToString("N2") $</p>
+            <p class="card-text"><strong>Listed by: </strong>@Listing.User.Email</p>
+            <a asp-action="Details" asp-route-id="@Listing.Id" class="btn btn-primary">@Listing.Title</a>
+        </div>
+    </div>
+}
+@if (!Model.Any())
+{
+    <p>No active listings found.</p>
+}
