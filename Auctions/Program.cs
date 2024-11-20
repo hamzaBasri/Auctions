@@ -41,3 +41,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+//https://www.youtube.com/watch?v=nKovSmd5DWY&list=PLdcOBYXgteNJ03IYtEVTaClEbik-t5JAj&index=4
