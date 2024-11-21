@@ -6,20 +6,44 @@
 
 <h2>Active Listings</h2>
 
-@foreach (var Listing in Model)
+@if (Model.Any())
 {
-    <div class="card" style="width: 18rem;">
-        <img src="~/Images/@Listing.ImagePath" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">@Listing.Title</h5>
-            <p class="card-text">@Listing.Description</p>
-            <p class="card-text"><strong>Price: </strong>@Listing.Price.ToString("N2") $</p>
-            <p class="card-text"><strong>Listed by: </strong>@Listing.User.Email</p>
-            <a asp-action="Details" asp-route-id="@Listing.Id" class="btn btn-primary">@Listing.Title</a>
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Count(); i += 4)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="row">
+                        @foreach (var Listing in Model.Skip(i).Take(4))
+                        {
+                            <div class="col-md-3">
+                                <div class="card h-100">
+                                    <img src="~/Images/@Listing.ImagePath" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@Listing.Title</h5>
+                                        <p class="card-text">@Listing.Description</p>
+                                        <p class="card-text"><strong>Price: </strong>@Listing.Price.ToString("N2") $</p>
+                                        <p class="card-text"><strong>Listed by: </strong>@Listing.User.Email</p>
+                                        <a asp-action="Details" asp-route-id="@Listing.Id" class="btn btn-primary">@Listing.Title</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
         </div>
     </div>
+    <button class="carousel-control-prev btn btn-sm" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: blue; position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 30px; height: 30px; margin-left: 15px;">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next btn btn-sm" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="background-color: blue; position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 30px; height: 30px; margin-right: 15px;">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 }
-@if (!Model.Any())
+else
 {
     <p>No active listings found.</p>
 }

@@ -1,10 +1,21 @@
 html {
+    .card {
+        width: 100%; /* Adjust the width to be responsive */
+        height: auto; /* Adjust the height to be responsive */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
   font-size: 14px;
 }
 
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+    .card {
+        width: 18rem; /* Adjust the width for larger screens */
+        height: 18rem; /* Adjust the height for larger screens */
+    }
   }
 }
 
