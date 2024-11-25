@@ -29,24 +29,22 @@ namespace Auctions.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        //// GET: Listings/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Listings/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var listing = await _context.Listings
-        //        .Include(l => l.User)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (listing == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var listing = await _listingService.GetById(id.Value);
+            if (listing == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(listing);
-        //}
+            return View(listing);
+        }
 
         // GET: Listings/Create
         public IActionResult Create()
