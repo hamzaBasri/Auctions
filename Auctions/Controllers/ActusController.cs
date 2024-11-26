@@ -23,12 +23,26 @@ namespace Auctions.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-       
+
         // GET: Actus
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, string searchString)
         {
             var applicationDbContext = _actuService.GetAll();
-            return View(await applicationDbContext.ToListAsync());
+            int pageSize = 3;
+
+            //return View(await applicationDbContext.ToListAsync());
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                applicationDbContext = applicationDbContext.Where(s => s.Titre.Contains(searchString));
+                return View(await PaginatedList<Actu>
+                .CreateAsync(applicationDbContext
+                //.Where(l=>l.IsSold == false)
+                .AsNoTracking(), pageNumber ?? 1, pageSize));
+            }
+            return View(await PaginatedList<Actu>
+                .CreateAsync(applicationDbContext
+                //.Where(l=>l.IsSold == false)
+                .AsNoTracking(), pageNumber ?? 1, pageSize));
         }
         // GET: Listings/Create
         public IActionResult Create()

@@ -33,5 +33,10 @@ namespace Auctions.Data.Services
                 .FirstOrDefaultAsync(l => l.Id == id);
             return listing;
         }
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

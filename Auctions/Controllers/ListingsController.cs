@@ -15,18 +15,34 @@ namespace Auctions.Controllers
     {
         private readonly IListingService _listingService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IBidsService _bidsService;
 
-        public ListingsController(IListingService listingService, IWebHostEnvironment webHostEnvironment)
+        public ListingsController(IListingService listingService, IWebHostEnvironment webHostEnvironment,IBidsService bidsService)
         {
             _listingService = listingService;
             _webHostEnvironment = webHostEnvironment;
+            _bidsService = bidsService;
         }
 
         // GET: Listings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, string searchString)
         {
             var applicationDbContext = _listingService.GetAll();
-            return View(await applicationDbContext.ToListAsync());
+            int pageSize = 3;
+
+            //return View(await applicationDbContext.ToListAsync());
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                applicationDbContext = applicationDbContext.Where(s => s.Title.Contains(searchString));
+                return View(await PaginatedList<Listing>
+                .CreateAsync(applicationDbContext
+                .Where(l=>l.IsSold == false)
+                .AsNoTracking(), pageNumber ?? 1, pageSize));
+            }
+            return View(await PaginatedList<Listing>
+                .CreateAsync(applicationDbContext
+                .Where(l=>l.IsSold == false)
+                .AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Listings/Details/5
@@ -44,6 +60,29 @@ namespace Auctions.Controllers
             }
 
             return View(listing);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddBid([Bind("Id, Price, ListingId, IdentityUserId")] Bid bid)
+        {
+            if(ModelState.IsValid)
+            {
+                await _bidsService.Add(bid);
+            }
+            var listing = await _listingService.GetById(bid.ListingId);
+            listing.Price = bid.Price;
+            await _listingService.SaveChanges();
+            //return RedirectToAction("Details", new { id = bid.ListingId });
+            return View("Details", listing);
+        }
+
+        public async Task<ActionResult> CloseBidding(int id)
+        {
+            var listing = await _listingService.GetById(id);
+            listing.IsSold = true;
+            await _listingService.SaveChanges();
+            //return RedirectToAction("Index");
+            return View("Details", listing);
         }
 
         // GET: Listings/Create

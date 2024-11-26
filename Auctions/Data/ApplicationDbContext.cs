@@ -16,5 +16,7 @@ namespace Auctions.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ListingVM> ListingsVMs { get; set; }
         public DbSet<Actu> Actus { get; set; }
+        public DbSet<ActuVM> ActusVMs { get; set; }
+        
     }
 }
