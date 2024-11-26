@@ -20,5 +20,14 @@ namespace Auctions.Data.Services
             var applicationDbContext = _context.Actus.Include(l => l.User);
             return applicationDbContext;
         }
+        public async Task<Actu> GetById(int id)
+        {
+            var actu = await _context.Actus
+                .Include(l => l.User)
+                .Include(l => l.Comments)
+                .FirstOrDefaultAsync(l => l.Id == id);
+            return actu;
+        }
+        
     }
 }

@@ -67,7 +67,22 @@ namespace Auctions.Controllers
             return View(actu);
         }
 
+        // GET: Actus/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var actu = await _actuService.GetById(id.Value);
+            if (actu == null)
+            {
+                return NotFound();
+            }
+
+            return View(actu);
+        }
 
         //// GET: Actus/Details/5
         //public async Task<IActionResult> Details(int? id)

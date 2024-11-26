@@ -21,13 +21,22 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Listings" asp-action="Index"><i class="fa-solid fa-house"></i>Active Listings</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Actus" asp-action="Index"><i class="fa-solid fa-house"></i>Active Actus</a>
+                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Listings" asp-action="Create"><i class="fa-solid fa-plus"></i>Create Listing</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Actus" asp-action="Create"><i class="fa-solid fa-plus"></i>Create Actu</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Listings" asp-action="MyListings"><i class="fa-solid fa-newspaper"></i>My Listings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Actus" asp-action="MyActus"><i class="fa-solid fa-newspaper"></i>My Actus</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Listings" asp-action="MyBids"><i class="fa-solid fa-sack-dollar"></i>My Bids</a>

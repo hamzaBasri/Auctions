@@ -1,4 +1,6 @@
-﻿@model Auctions.Models.Actu
+﻿@model Auctions.Models.ActuVM
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> userManager
 
 @{
     ViewData["Title"] = "Create";
@@ -10,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Titre" class="control-label"></label>
@@ -22,29 +24,28 @@
                 <input asp-for="Contenu" class="form-control" />
                 <span asp-validation-for="Contenu" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="DatePublication" class="control-label"></label>
                 <input asp-for="DatePublication" class="form-control" />
                 <span asp-validation-for="DatePublication" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Auteur" class="control-label"></label>
                 <input asp-for="Auteur" class="form-control" />
                 <span asp-validation-for="Auteur" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" accept="image/*" style="30%" />
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="VideoUrl" class="control-label"></label>
                 <input asp-for="VideoUrl" class="form-control" />
                 <span asp-validation-for="VideoUrl" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
-                <label asp-for="IdentityUserId" class="control-label"></label>
-                <select asp-for="IdentityUserId" class ="form-control" asp-items="ViewBag.IdentityUserId"></select>
+                <input type="hidden" asp-for="IdentityUserId" class="form-control" value="@userManager.GetUserId(User)" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

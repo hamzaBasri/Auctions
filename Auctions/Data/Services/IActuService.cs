@@ -6,6 +6,6 @@ namespace Auctions.Data.Services
     {
         IQueryable<Actu> GetAll();
         Task Add(Actu actu);
-        //Task<Actu> GetById(int id);
+        Task<Actu> GetById(int id);
     }
 }
