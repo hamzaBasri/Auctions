@@ -24,6 +24,12 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Actus" asp-action="Index"><i class="fa-solid fa-house"></i>Active Actus</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="JeuxVideos" asp-action="Index"><i class="fa-solid fa-house"></i>Jeux Video</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="JeuxVideos" asp-action="Create"><i class="fa-solid fa-house"></i> Ajouter Jeux Video</a>
+                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">

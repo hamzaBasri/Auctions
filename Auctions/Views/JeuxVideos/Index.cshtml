@@ -1,0 +1,54 @@
+﻿@model PaginatedList<Auctions.Models.JeuxVideo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if (Model.Any())
+{
+
+    <div class="list-group">
+        @foreach (var JeuxVideo in Model)
+        {
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a asp-action="Details" asp-route-id="@JeuxVideo.Id">
+                            <img src="~/Images/@JeuxVideo.ImagePath" class="img-fluid card-img-top" alt="...">
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        <h5 class="mb-1">@JeuxVideo.Titre</h5>
+                        <p class="mb-1">@JeuxVideo.Description</p>
+                        @* <p class="mb-1"><strong>Listed by: </strong>@Actu.User.Email</p> *@
+                        <a asp-action="Details" asp-route-id="@JeuxVideo.Id" class="btn btn-primary">@JeuxVideo.Titre</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No active listings found.</p>
+}
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<div class="d-flex justify-content-center">
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex -1)" class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <div class="btn" style="cursor : default">
+        Page @(Model.PageIndex) of @Model.TotalPages
+    </div>
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</div>

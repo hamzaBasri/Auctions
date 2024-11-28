@@ -19,6 +19,7 @@ builder.Services.AddScoped<IListingService, ListingService>();
 builder.Services.AddScoped<IActuService, ActuService>();
 builder.Services.AddScoped<IBidsService, BidsService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IJeuxVideoService, JeuxVideoService>();
 
 var app = builder.Build();
 
