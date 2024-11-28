@@ -8,12 +8,13 @@ namespace Auctions.Models
     {
         public int Id { get; set; }
         public double Price { get; set; }
-        [Required]       
+        [Required]
         public string? IdentityUserId { get; set; }
         [ForeignKey("IdentityUserId")]
         public IdentityUser? User { get; set; }
-        public int ListingId { get; set; }
+        public int? ListingId { get; set; }
         [ForeignKey("ListingId")]
+        [InverseProperty("Bids")]
         public Listing? Listing { get; set; }
     }
 }

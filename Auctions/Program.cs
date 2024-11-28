@@ -18,6 +18,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IListingService, ListingService>();
 builder.Services.AddScoped<IActuService, ActuService>();
 builder.Services.AddScoped<IBidsService, BidsService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 var app = builder.Build();
 

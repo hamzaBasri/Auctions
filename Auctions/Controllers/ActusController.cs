@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Auctions.Data;
 using Auctions.Models;
 using Auctions.Data.Services;
+using System.Security.Claims;
 
 namespace Auctions.Controllers
 {
@@ -36,12 +37,21 @@ namespace Auctions.Controllers
                 applicationDbContext = applicationDbContext.Where(s => s.Titre.Contains(searchString));
                 return View(await PaginatedList<Actu>
                 .CreateAsync(applicationDbContext
-                //.Where(l=>l.IsSold == false)
                 .AsNoTracking(), pageNumber ?? 1, pageSize));
             }
             return View(await PaginatedList<Actu>
                 .CreateAsync(applicationDbContext
-                //.Where(l=>l.IsSold == false)
+                .AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+        public async Task<IActionResult> MyActus(int? pageNumber)
+        {
+            var applicationDbContext = _actuService.GetAll();
+            int pageSize = 3;
+
+           
+            return View("Index",await PaginatedList<Actu>
+                .CreateAsync(applicationDbContext
+                .Where(l => l.IdentityUserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
                 .AsNoTracking(), pageNumber ?? 1, pageSize));
         }
         // GET: Listings/Create

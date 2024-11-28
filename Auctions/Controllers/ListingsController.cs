@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Auctions.Data;
 using Auctions.Models;
 using Auctions.Data.Services;
+using System.Security.Claims;
 
 namespace Auctions.Controllers
 {
@@ -16,12 +17,14 @@ namespace Auctions.Controllers
         private readonly IListingService _listingService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IBidsService _bidsService;
+        private readonly ICommentService _commentsService;
 
-        public ListingsController(IListingService listingService, IWebHostEnvironment webHostEnvironment,IBidsService bidsService)
+        public ListingsController(IListingService listingService, IWebHostEnvironment webHostEnvironment,IBidsService bidsService, ICommentService commentsService)
         {
             _listingService = listingService;
             _webHostEnvironment = webHostEnvironment;
             _bidsService = bidsService;
+            _commentsService = commentsService;
         }
 
         // GET: Listings
@@ -44,6 +47,31 @@ namespace Auctions.Controllers
                 .Where(l=>l.IsSold == false)
                 .AsNoTracking(), pageNumber ?? 1, pageSize));
         }
+        public async Task<IActionResult> MyListings(int? pageNumber)
+        {
+            var applicationDbContext = _listingService.GetAll();
+            int pageSize = 3;
+
+            //return View(await applicationDbContext.ToListAsync());
+            
+            return View("Index", await PaginatedList<Listing>
+                .CreateAsync(applicationDbContext
+                .Where(l =>l.IdentityUserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                .AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+        public async Task<IActionResult> MyBids(int? pageNumber)
+        {
+            var applicationDbContext = _bidsService.GetAll();
+            int pageSize = 3;
+
+            //return View(await applicationDbContext.ToListAsync());
+
+            return View(await PaginatedList<Bid>
+                .CreateAsync(applicationDbContext
+                .Where(l => l.IdentityUserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                .AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+
 
         // GET: Listings/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -69,7 +97,7 @@ namespace Auctions.Controllers
             {
                 await _bidsService.Add(bid);
             }
-            var listing = await _listingService.GetById(bid.ListingId);
+            var listing = await _listingService.GetById(bid.ListingId.Value);
             listing.Price = bid.Price;
             await _listingService.SaveChanges();
             //return RedirectToAction("Details", new { id = bid.ListingId });
@@ -121,6 +149,20 @@ namespace Auctions.Controllers
             }
             return View(listing);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> AddComment([Bind("Id, Content, ListingId, IdentityUserId")] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                await _commentsService.Add(comment);
+            }
+            var listing = await _listingService.GetById(comment.ListingId);
+            //return RedirectToAction("Details", new { id = comment.ListingId });
+            return View("Details", listing);
+        }
+
+
 
         //// GET: Listings/Edit/5
         //public async Task<IActionResult> Edit(int? id)
