@@ -21,6 +21,7 @@ namespace Auctions.Data
         public DbSet<JeuxVideo> JeuxVideos { get; set; }
         public DbSet<Plateforme> Plateformes { get; set; }
         public DbSet<JeuxVideoPlateforme> JeuxVideoPlateformes { get; set; }
+        public DbSet<JeuxVideoVM> JeuxVideosVMs { get; set; }
         //public DbSet<Genre> Genres { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,10 +53,10 @@ namespace Auctions.Data
                 );
             modelBuilder.Entity<JeuxVideo>()
                 .HasData(
-                    new JeuxVideo { Id = 1, Titre = "Cyberpunk 2077", Description = "super bon jeux", Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" },
-                    new JeuxVideo { Id = 2, Titre = "The Witcher 3", Description = "super bon jeux", Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" },
-                    new JeuxVideo { Id = 3, Titre = "GTA V", Description = "super bon jeux" , Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" },
-                    new JeuxVideo { Id = 4, Titre = "Red Dead Redemption 2", Description = "super bon jeux", Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" }
+                    new JeuxVideo { Id = 1, Titre = "Cyberpunk 2077", Description = "super bon jeux", ImagePath = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" },
+                    new JeuxVideo { Id = 2, Titre = "The Witcher 3", Description = "super bon jeux", ImagePath = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" },
+                    new JeuxVideo { Id = 3, Titre = "GTA V", Description = "super bon jeux" , ImagePath = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" },
+                    new JeuxVideo { Id = 4, Titre = "Red Dead Redemption 2", Description = "super bon jeux", ImagePath = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffr.tripadvisor.ca%2FRestaurants-g181733-c31-Brossard_Quebec.html&psig=AOvVaw3hUHWS986UP-e8wtSJ0uxa&ust=1731761632327000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIi6pPmw3okDFQAAAAAdAAAAABAE" }
                 );
             modelBuilder.Entity<JeuxVideoPlateforme>()
                 .HasData(

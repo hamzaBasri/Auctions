@@ -7,7 +7,7 @@ namespace Auctions.Models
         public int Id { get; set; }
         public string Titre { get; set; }
         public string Description { get; set; }
-        public string Image { get; set; }       
+        public string ImagePath { get; set; }       
         public List<JeuxVideoPlateforme>? JeuxVideoPlateformes { get; set; }
 
         //public string Plateforme { get; set; }
